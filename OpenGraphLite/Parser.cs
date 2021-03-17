@@ -31,7 +31,7 @@ namespace OpenGraphLite
             }
         }
 
-        public IReadOnlyCollection<Value> Parse(string source)
+        public Values Parse(string source)
         {
             if (!(source.StartsWith(HeadOpen, StringComparison.OrdinalIgnoreCase) && source.EndsWith(HeadClose, StringComparison.OrdinalIgnoreCase)))
             {
@@ -44,7 +44,7 @@ namespace OpenGraphLite
                 .Select(match => new Value(match.Groups[PropertyGroup].Value, match.Groups[ContentGroup].Value))
                 .ToArray();
 
-            return matches;
+            return new Values(matches);
         }
     }
 }
