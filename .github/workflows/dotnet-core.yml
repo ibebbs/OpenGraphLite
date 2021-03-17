@@ -1,0 +1,31 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.101
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+      with:
+        nuget-version: latest
+    - name: Install dependencies
+      run: dotnet restore ./OpenGraphLite/OpenGraphLite.csproj
+    - name: Build
+      run: dotnet build ./OpenGraphLite/OpenGraphLite.csproj --configuration Release --no-restore
+    - name: Pack
+      run: dotnet pack ./OpenGraphLite/OpenGraphLite.csproj -p:PackageVersion=1.0.$GITHUB_RUN_NUMBER --configuration Release -o nupkg --no-build
+    - name: Push to GitHub Packages
+      run: nuget push nupkg/*.nupkg -Source "https://nuget.pkg.github.com/ibebbs/index.json" -ApiKey ${{ secrets.GITHUB_TOKEN }}
