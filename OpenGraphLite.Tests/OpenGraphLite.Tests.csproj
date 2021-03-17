@@ -22,7 +22,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\Agriculture Bill Briefing for Lords Stages - House of Lords Library.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\bills_2551_stages_12546.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Have your say on the Agriculture Bill - UK Parliament.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\The Agriculture Act 2020 - House of Commons Library.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

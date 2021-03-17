@@ -9,7 +9,7 @@ namespace OpenGraphLite
     {
         public static readonly Parser Default = new Parser();
 
-        private static readonly Regex Regex = new Regex(@"\<meta(?:\s(?:(?:content=\""(?<Content>[^\""]+)\"")|(?:property=\""(?<Property>og:\w+)\""))){2}", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
+        private static readonly Regex Regex = new Regex(@"\<meta(?:\s(?:(?:content=[""'](?<Content>[^""']+)[""'])|(?:property=[""'](?<Property>og:[\w\:]+)[""']))){2}", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
         private const string HeadOpen = "<head>";
         private const string HeadClose = "</head>";
@@ -39,6 +39,7 @@ namespace OpenGraphLite
             }
 
             var matches = Regex.Matches(source)
+                .OfType<Match>()
                 .Where(match => match.Groups[PropertyGroup].Success && match.Groups[ContentGroup].Success)
                 .Select(match => new Value(match.Groups[PropertyGroup].Value, match.Groups[ContentGroup].Value))
                 .ToArray();
